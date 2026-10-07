@@ -63,7 +63,7 @@ psql -d quickbite -f sql/04_queries.sql
 
 ## 1. ER Diagram
 
-![ER diagram](docs/er_diagram.png)
+! refer the image uploaded in github repo under chen_notation.svg (since uploading here is causing issues) 
 
 **Entities:** Restaurant, MenuItem, Customer, FoodOrder, DeliveryAgent, plus two supporting tables:
 
