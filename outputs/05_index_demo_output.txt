@@ -1,0 +1,71 @@
+
+---- Catalogue size ----
+ restaurants 
+-------------
+      200011
+(1 row)
+
+
+==== 1) WITHOUT the index  -> expect Seq Scan (full table scan) ====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ Gather (actual time=0.475..13.349 rows=835.00 loops=1)
+   Workers Planned: 1
+   Workers Launched: 1
+   Buffers: shared hit=2879
+   ->  Parallel Seq Scan on restaurant (actual time=0.036..9.085 rows=417.50 loops=2)
+         Filter: (((cuisine)::text = 'North Indian'::text) AND ((location)::text = 'Kharghar'::text))
+         Rows Removed by Filter: 99588
+         Buffers: shared hit=2879
+ Planning:
+   Buffers: shared hit=20
+ Planning Time: 0.134 ms
+ Execution Time: 13.418 ms
+(12 rows)
+
+
+==== 2) WITH the index     -> expect Index / Bitmap Index Scan ====
+                                                QUERY PLAN                                                 
+-----------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on restaurant (actual time=0.182..1.010 rows=835.00 loops=1)
+   Recheck Cond: (((cuisine)::text = 'North Indian'::text) AND ((location)::text = 'Kharghar'::text))
+   Heap Blocks: exact=834
+   Buffers: shared hit=834 read=3
+   ->  Bitmap Index Scan on idx_restaurant_cuisine_location (actual time=0.098..0.098 rows=835.00 loops=1)
+         Index Cond: (((cuisine)::text = 'North Indian'::text) AND ((location)::text = 'Kharghar'::text))
+         Index Searches: 1
+         Buffers: shared read=3
+ Planning:
+   Buffers: shared hit=19 read=1
+ Planning Time: 0.143 ms
+ Execution Time: 1.058 ms
+(12 rows)
+
+
+==== 3) Leftmost-prefix: cuisine-only search also uses the index ====
+                         QUERY PLAN                         
+------------------------------------------------------------
+ Bitmap Heap Scan on restaurant
+   Recheck Cond: ((cuisine)::text = 'Italian'::text)
+   ->  Bitmap Index Scan on idx_restaurant_cuisine_location
+         Index Cond: ((cuisine)::text = 'Italian'::text)
+(4 rows)
+
+
+==== 4) Location-only search (2nd column only) ====
+PostgreSQL <= 17: cannot seek -> Seq Scan.
+PostgreSQL 18+ : B-tree "skip scan" probes ~once per distinct cuisine
+                 (see "Index Searches") - works, but costlier than a
+                 leading-column seek. Order columns by search pattern.
+                                                 QUERY PLAN                                                  
+-------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on restaurant (actual time=0.774..2.427 rows=10010.00 loops=1)
+   Recheck Cond: ((location)::text = 'Powai'::text)
+   Heap Blocks: exact=961
+   Buffers: shared hit=1012 read=37
+   ->  Bitmap Index Scan on idx_restaurant_cuisine_location (actual time=0.671..0.671 rows=10010.00 loops=1)
+         Index Cond: ((location)::text = 'Powai'::text)
+         Index Searches: 25
+         Buffers: shared hit=51 read=37
+(8 rows)
+

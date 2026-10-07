@@ -1,0 +1,11 @@
+   table_name   | rows 
+----------------+------
+ restaurant     |   11
+ menu_item      |   53
+ customer       |   15
+ delivery_agent |    8
+ food_order     |   49
+ order_item     |  110
+ payment        |   49
+(7 rows)
+

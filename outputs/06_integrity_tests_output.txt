@@ -1,0 +1,18 @@
+psql:sql/06_integrity_tests.sql:46: NOTICE:  OK    Order for a customer that does not exist (FK)
+psql:sql/06_integrity_tests.sql:46: NOTICE:        rejected: insert or update on table "food_order" violates foreign key constraint "food_order_customer_id_fkey"
+psql:sql/06_integrity_tests.sql:46: NOTICE:  OK    Order for a restaurant that does not exist (FK)
+psql:sql/06_integrity_tests.sql:46: NOTICE:        rejected: insert or update on table "food_order" violates foreign key constraint "food_order_restaurant_id_fkey"
+psql:sql/06_integrity_tests.sql:46: NOTICE:  OK    Order with no delivery agent (NOT NULL)
+psql:sql/06_integrity_tests.sql:46: NOTICE:        rejected: null value in column "delivery_agent_id" of relation "food_order" violates not-null constraint
+psql:sql/06_integrity_tests.sql:46: NOTICE:  OK    Order line for a dish from ANOTHER restaurant (trigger)
+psql:sql/06_integrity_tests.sql:46: NOTICE:        rejected: Menu item 21 does not belong to the restaurant of order 1
+psql:sql/06_integrity_tests.sql:46: NOTICE:  OK    Deleting a restaurant that still has orders (ON DELETE RESTRICT)
+psql:sql/06_integrity_tests.sql:46: NOTICE:        rejected: update or delete on table "restaurant" violates RESTRICT setting of foreign key constraint "menu_item_restaurant_id_fkey" on table "menu_item"
+psql:sql/06_integrity_tests.sql:46: NOTICE:  OK    Second payment for an already-paid order (1:1 UNIQUE)
+psql:sql/06_integrity_tests.sql:46: NOTICE:        rejected: duplicate key value violates unique constraint "payment_order_id_key"
+psql:sql/06_integrity_tests.sql:46: NOTICE:  OK    Menu item with a negative price (CHECK)
+psql:sql/06_integrity_tests.sql:46: NOTICE:        rejected: new row for relation "menu_item" violates check constraint "menu_item_price_check"
+psql:sql/06_integrity_tests.sql:46: NOTICE:  OK    Unknown order status (CHECK)
+psql:sql/06_integrity_tests.sql:46: NOTICE:        rejected: new row for relation "food_order" violates check constraint "food_order_status_check"
+psql:sql/06_integrity_tests.sql:46: NOTICE:  OK    Duplicate customer e-mail (UNIQUE)
+psql:sql/06_integrity_tests.sql:46: NOTICE:        rejected: duplicate key value violates unique constraint "customer_email_key"

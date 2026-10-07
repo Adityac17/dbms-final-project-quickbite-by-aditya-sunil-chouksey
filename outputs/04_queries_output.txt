@@ -1,0 +1,103 @@
+ restaurant_id |       restaurant       |   most_popular_dish   | times_ordered | units_sold 
+---------------+------------------------+-----------------------+---------------+------------
+             1 | Punjab Da Dhaba        | Butter Chicken        |             6 |          7
+             2 | Udupi Sagar            | Masala Dosa           |             4 |          6
+             3 | Dragon Wok             | Chilli Paneer         |             3 |          3
+             3 | Dragon Wok             | Veg Hakka Noodles     |             3 |          4
+             4 | La Pizzeria Napoli     | Margherita Pizza      |             4 |          5
+             5 | Biryani Darbar         | Chicken Dum Biryani   |             5 |          8
+             6 | Mumbai Chaat Corner    | Pav Bhaji             |             4 |          6
+             7 | Amritsari Kulcha House | Amritsari Kulcha      |             3 |          6
+             8 | Madras Filter Cafe     | Ghee Roast Dosa       |             3 |          4
+             9 | Wok Express            | Chicken Hakka Noodles |             3 |          4
+            10 | The Green Bowl         | Quinoa Buddha Bowl    |             2 |          2
+(11 rows)
+
+ restaurant_id |       restaurant       |   cuisine    | delivered_orders | total_revenue | avg_order_value 
+---------------+------------------------+--------------+------------------+---------------+-----------------
+             5 | Biryani Darbar         | Mughlai      |                6 |       5270.00 |          878.33
+             4 | La Pizzeria Napoli     | Italian      |                5 |       4447.00 |          889.40
+             1 | Punjab Da Dhaba        | North Indian |                6 |       4330.00 |          721.67
+             3 | Dragon Wok             | Chinese      |                4 |       2490.00 |          622.50
+             7 | Amritsari Kulcha House | North Indian |                4 |       2110.00 |          527.50
+             9 | Wok Express            | Chinese      |                4 |       2090.00 |          522.50
+             2 | Udupi Sagar            | South Indian |                5 |       1610.00 |          322.00
+             6 | Mumbai Chaat Corner    | Street Food  |                5 |       1550.00 |          310.00
+            10 | The Green Bowl         | Continental  |                2 |       1390.00 |          695.00
+             8 | Madras Filter Cafe     | South Indian |                4 |       1230.00 |          307.50
+            11 | Malvani Tadka          | Malvani      |                0 |             0 |               0
+(11 rows)
+
+ restaurant_id |          name          |   cuisine    | location | rating 
+---------------+------------------------+--------------+----------+--------
+             7 | Amritsari Kulcha House | North Indian | Kharghar |    4.5
+             1 | Punjab Da Dhaba        | North Indian | Kharghar |    4.4
+(2 rows)
+
+     restaurant     | total_revenue 
+--------------------+---------------
+ Biryani Darbar     |       5270.00
+ La Pizzeria Napoli |       4447.00
+ Punjab Da Dhaba    |       4330.00
+(3 rows)
+
+   restaurant   |          dish          | price  
+----------------+------------------------+--------
+ The Green Bowl | Classic Caesar Salad   | 320.00
+ The Green Bowl | Cream of Mushroom Soup | 220.00
+ Malvani Tadka  | Prawn Malvani Curry    | 420.00
+ Malvani Tadka  | Sol Kadhi              |  80.00
+ Malvani Tadka  | Surmai Fry             | 380.00
+(5 rows)
+
+ delivery_agent_id |     agent      | vehicle_type | delivered_orders | avg_delivery_mins 
+-------------------+----------------+--------------+------------------+-------------------
+                 2 | Suresh Patil   | Scooter      |                8 |              30.8
+                 7 | Anil Kamble    | Bicycle      |                6 |              28.7
+                 1 | Ramesh Yadav   | Motorbike    |                6 |              34.2
+                 4 | Deepak Chauhan | Motorbike    |                6 |              36.8
+                 3 | Imran Shaikh   | EV Scooter   |                6 |              37.7
+                 5 | Joseph D'Souza | Scooter      |                5 |              40.6
+                 6 | Ganesh More    | Motorbike    |                4 |              30.0
+                 8 | Manoj Tiwari   | EV Scooter   |                4 |              37.8
+(8 rows)
+
+ customer_id |    customer    |   location   | orders | total_spent 
+-------------+----------------+--------------+--------+-------------
+           3 | Rohan Mehta    | Powai        |      3 |     2797.00
+           1 | Aarav Sharma   | Kharghar     |      4 |     2720.00
+          13 | Aditya Rao     | Andheri West |      2 |     2120.00
+           5 | Karan Malhotra | Andheri West |      3 |     1920.00
+          14 | Tanvi Kapoor   | Bandra West  |      3 |     1916.00
+(5 rows)
+
+   cuisine    | restaurants | delivered_orders | revenue 
+--------------+-------------+------------------+---------
+ North Indian |           2 |               10 | 6440.00
+ Mughlai      |           1 |                6 | 5270.00
+ Chinese      |           2 |                8 | 4580.00
+ Italian      |           1 |                5 | 4447.00
+ South Indian |           2 |                9 | 2840.00
+ Street Food  |           1 |                5 | 1550.00
+ Continental  |           1 |                2 | 1390.00
+ Malvani      |           1 |                0 |       0
+(8 rows)
+
+ order_id |    ordered_at     |  customer  |   restaurant   | delivery_agent |        item         | quantity | unit_price | line_total | paid_via 
+----------+-------------------+------------+----------------+----------------+---------------------+----------+------------+------------+----------
+       26 | 21-Sep-2026 20:45 | Aditya Rao | Biryani Darbar | Deepak Chauhan | Chicken Dum Biryani |        3 |     320.00 |     960.00 | UPI
+       26 | 21-Sep-2026 20:45 | Aditya Rao | Biryani Darbar | Deepak Chauhan | Chicken Seekh Kebab |        2 |     280.00 |     560.00 | UPI
+       26 | 21-Sep-2026 20:45 | Aditya Rao | Biryani Darbar | Deepak Chauhan | Phirni              |        3 |     110.00 |     330.00 | UPI
+(3 rows)
+
+ method | orders |  amount  | pct_of_orders 
+--------+--------+----------+---------------
+ UPI    |     23 | 14163.00 |          51.1
+ Card   |     10 |  5866.00 |          22.2
+ Cash   |      7 |  3430.00 |          15.6
+ Wallet |      5 |  3058.00 |          11.1
+(4 rows)
+
+psql:sql/04_queries.sql:166: ERROR:  syntax error at or near ","
+LINE 1: CREATE TABLE employees,
+                              ^
